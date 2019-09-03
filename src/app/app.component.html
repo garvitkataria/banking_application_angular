@@ -1,0 +1,105 @@
+<div class="container text-center">
+  <h1>{{title}}</h1>
+</div>
+<div class="container">
+  <div class="row">
+
+<div class="dropdown"  >
+    City : 
+    <select name="cars" class="btn btn-secondary dropdown-toggle" [(ngModel)]="location" (change)="changeLocation()" type="button">
+    <option value="BANGALORE">Bangalore</option>
+    <option value="MUMBAI">Mumbai</option>
+    <option value="DELHI">Delhi</option>
+    <option value="HYDERABAD">Hyderabad</option>
+    <option value="JAIPUR">Jaipur</option>
+  </select>
+</div>
+
+
+
+    <div class="search-hero">
+      <input class="form-control" type="text" name="search" [(ngModel)]="searchText" autocomplete="off" placeholder="&#61442;  Start Searching..." >
+    </div>
+    <br>
+
+    <h4>Total Results: {{banks.length}}</h4>
+
+<!--     <table class="table table-striped table-responsive" >
+        <H3>Favourite Banks</H3>
+          <thead >
+          <tr>
+            <th>IFSC</th>
+            <th>Bank Id</th>
+            <th>Branch</th>
+            <th>Address</th>
+            <th>City</th>
+            <th>District</th>
+            <th>State</th>
+            <th>Bank Name</th>
+          </tr>
+          </thead>
+          <tbody >
+            <tr *ngFor="let bank of favourite_banks">
+                <td>{{bank.ifsc}}</td>
+                <td>{{bank.bank_id}}</td>
+                <td>{{bank.branch}}</td>
+                <td>{{bank.address}}</td>
+                <td>{{bank.city}}</td>
+                <td>{{bank.district}}</td>
+                <td>{{bank.state}}</td>
+                <td>{{bank.bank_name}}</td>
+              </tr>
+        </tbody>
+    </table> -->
+
+    <table class="table table-striped table-responsive" >
+
+    <button type="button" class="btn btn-secondary" *ngIf="table_flag" (click)="changeTable()" style="margin-left: 40%">All Banks</button>
+    <button type="button" class="btn btn-secondary" *ngIf="!table_flag" (click)="changeTable()" style="margin-left: 40%">Favourites</button>
+        <H3 *ngIf="table_flag">Favourite Banks</H3>
+        <H3 *ngIf="!table_flag">All Banks</H3>
+      <thead *ngIf="loader_flag">
+      <tr>
+        <th>IFSC</th>
+        <th>Bank Id</th>
+        <th>Branch</th>
+        <th>Address</th>
+        <th>City</th>
+        <th>District</th>
+        <th>State</th>
+        <th>Bank Name</th>
+        <th *ngIf="!table_flag">Add to Favourite</th>
+      </tr>
+      </thead>
+
+      <tbody *ngIf="loader_flag">
+        <tr *ngFor="let bank of show_banks  | filter:searchText | paginate: { itemsPerPage: page_size, currentPage: p }">
+            <td>{{bank.ifsc}}</td>
+            <td>{{bank.bank_id}}</td>
+            <td>{{bank.branch}}</td>
+            <td>{{bank.address}}</td>
+            <td>{{bank.city}}</td>
+            <td>{{bank.district}}</td>
+            <td>{{bank.state}}</td>
+            <td>{{bank.bank_name}}</td>
+            <td *ngIf="!table_flag"><button type="button" class="btn btn-dark" (click)="addFavouriteBank(bank)"><span class="glyphicon glyphicon-star-empty"></span></button></td>
+          </tr>
+      </tbody>
+
+<div class="spinner-border" style="width: 3rem; height: 3rem; margin-left:50%; margin-top:10%; " role="status" *ngIf="!loader_flag">
+          <span class="sr-only">Loading...</span>
+</div>
+    </table>
+          <div class="dropdown"  >
+            Page Size : 
+        <select name="cars" class="btn btn-secondary dropdown-toggle" [(ngModel)]="page_size" type="button">
+        <option value=25>25</option>
+        <option value=50>50</option>
+        <option value=100>100</option>
+        <option value=200>200</option>
+        <option value=250>250</option>
+      </select>
+    </div>
+     <pagination-controls (pageChange)="p = $event" *ngIf="loader_flag" style="margin: auto;"></pagination-controls>
+  </div>
+</div>
