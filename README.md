@@ -1,4 +1,4 @@
-# banking_application_angular
+# Banking Application Angular
 
 https://garvitkataria.github.io/
 ## Setup
